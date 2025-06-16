@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -48,6 +50,7 @@ fun HomeScreen () {
     val viewModel : RecipesListViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    val isLoadingMore by viewModel.isLoadingMore.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getRecipes()
@@ -101,11 +104,14 @@ fun HomeScreen () {
 
             is RecipesListUiState.Success -> { // when list returns successfully
                 val recipes = (state as RecipesListUiState.Success).recipes
+                val listState = rememberLazyGridState()
+
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    state = listState
                 ) {
                     items(recipes.size) { index ->
                         val recipe = recipes[index]
@@ -114,8 +120,27 @@ fun HomeScreen () {
                             publisher = recipe.publisher,
                             imageUrl = recipe.featured_image
                         )
+
+                        if (index >= recipes.size - 4) {
+                            LaunchedEffect(key1 = index) {
+                                viewModel.loadNextPage()
+                            }
+                        }
+                    }
+                    if (isLoadingMore) {
+                        item(span = { GridItemSpan(2) }) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(color = Color.Gray)
+                            }
+                        }
                     }
                 }
+
             }
 
             is RecipesListUiState.Error -> { // when there is an error

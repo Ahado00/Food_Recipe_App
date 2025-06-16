@@ -20,18 +20,47 @@ class RecipesListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<RecipesListUiState>(RecipesListUiState.Loading)
     val uiState: StateFlow<RecipesListUiState> = _uiState
 
-    fun getRecipes(query: String = "") {
+    private var currentPage = 1
+    private var endReached = false
+    private val _isLoadingMore = MutableStateFlow(false)
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore
+
+
+    private var currentRecipes = mutableListOf<Recipe>()
+
+
+    fun getRecipes(query: String = "", page: Int = 1) {
+
+        if (_isLoadingMore.value || endReached) return
+        _isLoadingMore.value = true
+
         viewModelScope.launch {
-            _uiState.value = RecipesListUiState.Loading
+            if (page == 1) {
+                _uiState.value = RecipesListUiState.Loading
+                currentRecipes.clear()
+                endReached = false
+            }
             try {
-                val response = RetrofitInstance.api.searchRecipes(query = query)
-                if (response.results.isNotEmpty()) {
-                    _uiState.value = RecipesListUiState.Success(response.results)
-                } else {
-                    _uiState.value = RecipesListUiState.Error("No recipes found.")
+                val response = RetrofitInstance.api.searchRecipes(query = query, page = page)
+                val newRecipes = response.results
+
+                if (newRecipes.isEmpty()) {
+                    endReached = true
                 }
+
+                currentRecipes.addAll(newRecipes)
+                _uiState.value = RecipesListUiState.Success(currentRecipes)
+                currentPage = page
+
+//                if (response.results.isNotEmpty()) {
+//                    _uiState.value = RecipesListUiState.Success(response.results)
+//                } else {
+//                    _uiState.value = RecipesListUiState.Error("No recipes found.")
+//                }
             } catch (e: Exception) {
                 _uiState.value = RecipesListUiState.Error("Failed to load recipes.")
+            } finally {
+                _isLoadingMore.value = false
             }
         }
     }
@@ -39,5 +68,12 @@ class RecipesListViewModel : ViewModel() {
     fun onSearchQueryChange(newQuery: String) {
         _searchQuery.value = newQuery
         getRecipes(newQuery)
+    }
+
+
+    fun loadNextPage() {
+        if (!_isLoadingMore.value && !endReached) {
+            getRecipes(query = _searchQuery.value, page = currentPage + 1)
+        }
     }
 }
