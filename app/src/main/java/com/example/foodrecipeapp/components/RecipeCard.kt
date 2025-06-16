@@ -4,9 +4,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,7 +35,7 @@ fun RecipeCard ( imageUrl : String,
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(0.9f),
+            .wrapContentHeight(),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -51,8 +53,8 @@ fun RecipeCard ( imageUrl : String,
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = title, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text(text = "by $publisher", fontSize = 12.sp, color = Color.Gray)
+            Text(text = title, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            Text(text = "by $publisher", fontSize = 10.sp, color = Color.Gray)
         }
     }
 
