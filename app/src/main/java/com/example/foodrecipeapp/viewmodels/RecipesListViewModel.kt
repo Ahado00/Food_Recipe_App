@@ -14,6 +14,9 @@ class RecipesListViewModel : ViewModel() {
     private val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
     val recipes: StateFlow<List<Recipe>> = _recipes
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
+
     private val _uiState = MutableStateFlow<RecipesListUiState>(RecipesListUiState.Loading)
     val uiState: StateFlow<RecipesListUiState> = _uiState
 
@@ -31,5 +34,10 @@ class RecipesListViewModel : ViewModel() {
                 _uiState.value = RecipesListUiState.Error("Failed to load recipes.")
             }
         }
+    }
+
+    fun onSearchQueryChange(newQuery: String) {
+        _searchQuery.value = newQuery
+        getRecipes(newQuery)
     }
 }

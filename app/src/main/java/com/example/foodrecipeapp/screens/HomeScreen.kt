@@ -47,6 +47,7 @@ fun HomeScreen () {
 
     val viewModel : RecipesListViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getRecipes()
@@ -54,7 +55,8 @@ fun HomeScreen () {
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(32.dp)) {
+        .padding(32.dp)
+    ) {
 
         // Page title
         Text("Meals Recipes", fontSize = 24.sp, fontWeight = FontWeight.Bold)
@@ -63,8 +65,8 @@ fun HomeScreen () {
 
         // Search bar
         OutlinedTextField(
-            value = "",
-            onValueChange = {}, //Call search function
+            value = searchQuery,
+            onValueChange = {viewModel.onSearchQueryChange(it)}, //Call search function
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
