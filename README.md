@@ -39,7 +39,7 @@
 | State Management   | ViewModel + State Hoisting     |
 
 ## API Integration
-      Base URL:
+### Base URL:
       https://food2fork.ca/api/recipe/search
 
 
