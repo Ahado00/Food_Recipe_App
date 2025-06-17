@@ -38,5 +38,8 @@
 | Networking         | Retrofit                       |
 | State Management   | ViewModel + State Hoisting     |
 
-## Screenshots:
+## API Integration
+      Base URL:
+      https://food2fork.ca/api/recipe/search
+
 
