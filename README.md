@@ -3,12 +3,32 @@
 
 ## Features
 ### 1. Home Screen – Recipes List
-      - Built entirely with Jetpack Compose (no XML).
-      
-      - Paginated recipe list with:
-      
-        - Recipe image
-        
-        - Title
-        
-        - Publisher
+- Built entirely with Jetpack Compose (no XML).
+- Paginated recipe list with:
+      - Recipe image
+      - Title
+      - Publisher
+
+### 2. Search with Pagination
+- Search bar to filter recipes by name.
+- Infinite scrolling: more data loads when reaching the bottom of the list.
+
+### 3. Recipe Detail Screen
+- Tapping on a recipe navigates to the detail screen.
+- Shows:
+      - Full recipe title
+      - Large image
+      - Publisher name
+      - Ingredients list
+      - Source URL
+  
+### 4. Graceful handling of loading and error states
+
+## Tech Stack
+### Language: Kotlin
+### UI: Jetpack Compose
+### Networking: Retrofit
+### State Management: ViewModel + State Hoisting
+
+## Screenshots:
+
