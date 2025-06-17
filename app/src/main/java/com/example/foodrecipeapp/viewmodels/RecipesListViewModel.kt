@@ -8,11 +8,11 @@ import com.example.foodrecipeapp.ui.state.RecipesListUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
+/**
+ * this VM handles the logic of fetching recipe list
+ * also handles the search meal by name along with "load more" state
+ * */
 class RecipesListViewModel : ViewModel() {
-
-    private val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
-    val recipes: StateFlow<List<Recipe>> = _recipes
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
@@ -24,8 +24,6 @@ class RecipesListViewModel : ViewModel() {
     private var endReached = false
     private val _isLoadingMore = MutableStateFlow(false)
     val isLoadingMore: StateFlow<Boolean> = _isLoadingMore
-
-
     private var currentRecipes = mutableListOf<Recipe>()
 
 

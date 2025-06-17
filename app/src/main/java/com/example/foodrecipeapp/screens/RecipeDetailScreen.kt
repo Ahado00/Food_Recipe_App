@@ -44,15 +44,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.style.TextDecoration
 
+/**
+ * This is the Recipe Details Screen that is
+ * showing the info of specific recipe
+ * it contains:
+ * - Full title of the recipe
+ * - The publisher
+ * - Ingredients list
+ * - Recipe URL
+ * */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailScreen(recipeId: Int , navController : NavHostController){
 
-    val viewModel = remember {
-        RecipeDetailViewModel(RetrofitInstance.api)
-
-    }
-
+    val viewModel = remember {RecipeDetailViewModel(RetrofitInstance.api)}
     val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(recipeId) {
@@ -120,7 +125,10 @@ fun RecipeDetailScreen(recipeId: Int , navController : NavHostController){
     }
 }
 
-
+/**
+ * This composable function is to create a clickable URL
+ * Used above in Recipe URL
+ * */
 @Composable
 fun RecipeUrlText(url: String) {
     val context = LocalContext.current

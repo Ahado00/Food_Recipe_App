@@ -155,8 +155,6 @@ fun HomeScreen (navController : NavHostController) {
                     modifier = Modifier.padding(16.dp)
                 )
             }
-
-            is RecipesListUiState.DetailSuccess ->{}
         }
     }
 }

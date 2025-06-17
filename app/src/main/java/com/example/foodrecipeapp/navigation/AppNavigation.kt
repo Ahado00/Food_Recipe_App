@@ -12,7 +12,8 @@ fun AppNavigation( navController : NavHostController){
 
     NavHost(
         navController = navController,
-        startDestination = "home"){
+        startDestination = "home"
+    ){
 
         composable("home") {
             HomeScreen(navController = navController)
@@ -24,6 +25,6 @@ fun AppNavigation( navController : NavHostController){
                 RecipeDetailScreen(recipeId = it, navController = navController)
             }
         }
-    }
 
+    }
 }
