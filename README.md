@@ -31,10 +31,12 @@
 ### 4. Graceful handling of loading and error states
 
 ## Tech Stack
-### Language: Kotlin
-### UI: Jetpack Compose
-### Networking: Retrofit
-### State Management: ViewModel + State Hoisting
+| Category           | Technology                     |
+|--------------------|--------------------------------|
+| Language           | Kotlin                         |
+| UI                 | Jetpack Compose                |
+| Networking         | Retrofit                       |
+| State Management   | ViewModel + State Hoisting     |
 
 ## Screenshots:
 
