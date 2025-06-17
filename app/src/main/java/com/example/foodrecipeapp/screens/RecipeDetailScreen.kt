@@ -1,6 +1,5 @@
 package com.example.foodrecipeapp.screens
 
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,6 +38,11 @@ import com.example.foodrecipeapp.network.RetrofitInstance
 import com.example.foodrecipeapp.ui.state.RecipesDetailsUiState
 import com.example.foodrecipeapp.ui.state.RecipesListUiState
 import com.example.foodrecipeapp.viewmodels.RecipeDetailViewModel
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.text.style.TextDecoration
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,8 +97,6 @@ fun RecipeDetailScreen(recipeId: Int , navController : NavHostController){
                         contentScale = ContentScale.Crop
                     )
                     Spacer(Modifier.height(8.dp))
-                    //Text(recipe.title, fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                    //Text("Published by: ${recipe.publisher}", fontSize = 14.sp, color = Color.DarkGray)
                     Spacer(Modifier.height(8.dp))
                     Text("Ingredients:", fontSize = 18.sp ,fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(8.dp))
@@ -102,6 +104,9 @@ fun RecipeDetailScreen(recipeId: Int , navController : NavHostController){
                         Text("- $it", fontSize = 14.sp)
                         Spacer(Modifier.height(4.dp))
                     }
+                    Spacer(Modifier.height(16.dp))
+                    Text("Recipe URL:", fontSize = 18.sp ,fontWeight = FontWeight.Bold)
+                    RecipeUrlText(recipe.source_url)
                 }
             }
         }
@@ -116,3 +121,18 @@ fun RecipeDetailScreen(recipeId: Int , navController : NavHostController){
 }
 
 
+@Composable
+fun RecipeUrlText(url: String) {
+    val context = LocalContext.current
+
+    Text(
+        text = " $url",
+        fontSize = 14.sp,
+        color = Color.Blue,
+        textDecoration = TextDecoration.Underline,
+        modifier = Modifier.clickable {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(intent)
+        }
+    )
+}
