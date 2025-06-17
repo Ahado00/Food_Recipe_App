@@ -3,6 +3,8 @@
 
 ## Features
 ### 1. Home Screen – Recipes List
+![Screenshot_20250617_080623](https://github.com/user-attachments/assets/d42ea8f6-7db0-40eb-bcbd-3c1304aa7168)
+
 - Built entirely with Jetpack Compose (no XML).
 - Paginated recipe list with:
       - Recipe image
