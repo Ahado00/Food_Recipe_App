@@ -1,6 +1,7 @@
 package com.example.foodrecipeapp.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,12 +29,14 @@ import coil.compose.AsyncImage
 @Composable
 fun RecipeCard ( imageUrl : String,
                  title : String,
-                 publisher : String) {
+                 publisher : String,
+                 onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White,

@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.foodrecipeapp.components.RecipeCard
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.foodrecipeapp.ui.state.RecipesListUiState
 import com.example.foodrecipeapp.viewmodels.RecipesListViewModel
 
@@ -45,7 +46,7 @@ import com.example.foodrecipeapp.viewmodels.RecipesListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen () {
+fun HomeScreen (navController : NavHostController) {
 
     val viewModel : RecipesListViewModel = viewModel()
     val state by viewModel.uiState.collectAsState()
@@ -118,7 +119,10 @@ fun HomeScreen () {
                         RecipeCard(
                             title = recipe.title,
                             publisher = recipe.publisher,
-                            imageUrl = recipe.featured_image
+                            imageUrl = recipe.featured_image,
+                            onClick = {
+                                navController.navigate("recipe_detail/${recipe.pk}")
+                            }
                         )
 
                         if (index >= recipes.size - 4) {
@@ -151,6 +155,8 @@ fun HomeScreen () {
                     modifier = Modifier.padding(16.dp)
                 )
             }
+
+            is RecipesListUiState.DetailSuccess ->{}
         }
     }
 }

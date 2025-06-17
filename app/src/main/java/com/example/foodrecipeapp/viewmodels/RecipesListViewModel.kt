@@ -42,7 +42,7 @@ class RecipesListViewModel : ViewModel() {
             }
             try {
                 val response = RetrofitInstance.api.searchRecipes(query = query, page = page)
-                val newRecipes = response.results
+                val newRecipes = response.results.filter { it.title.contains(query, ignoreCase = true) }
 
                 if (newRecipes.isEmpty()) {
                     endReached = true
@@ -52,11 +52,6 @@ class RecipesListViewModel : ViewModel() {
                 _uiState.value = RecipesListUiState.Success(currentRecipes)
                 currentPage = page
 
-//                if (response.results.isNotEmpty()) {
-//                    _uiState.value = RecipesListUiState.Success(response.results)
-//                } else {
-//                    _uiState.value = RecipesListUiState.Error("No recipes found.")
-//                }
             } catch (e: Exception) {
                 _uiState.value = RecipesListUiState.Error("Failed to load recipes.")
             } finally {
