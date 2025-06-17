@@ -42,4 +42,6 @@
 ### Base URL:
       https://food2fork.ca/api/recipe/search
 
+---
+_This project is for evaluation purposes only._
 
